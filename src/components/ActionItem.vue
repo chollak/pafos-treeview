@@ -9,16 +9,14 @@
     <td style="max-width: 500px">{{ node.url }}</td>
     <td>{{ node.number_users }} [{{node.percent_users.toFixed(2)}}%]</td>
   </tr>
-  <tr v-if="hasChildren" v-show="showChildren">
     <ActionItem
-      
-      v-for="child in node.children"
+      v-for="child in filteredData"
+      v-show="showChildren"
       :spacing="spacing + 10"
       :key="child.id"
       :node="child"
       @request="sendRequest"
     />
-  </tr>
 </template>
 
 <script>
@@ -50,6 +48,13 @@ export default {
       const { children } = this.node;
       return children && children.length > 0;
     },
+    filteredData(){
+      const { children } = this.node;
+      if(children && children.length > 0) {
+        return children
+      }
+      else return [];
+    }
   },
   methods: {
     sendRequest(node, hasChildren) {
