@@ -4,16 +4,14 @@
       <button @click="sendRequest(node, hasChildren)">
         {{ hasChildren ? showChildren ? "-" : "+" : '+' }}
       </button>
-      {{ node.url }}
+      {{ node.action_type }}
     </td>
-    <td>{{ node.percent_stopped }}</td>
-    <td>{{ node.action_type }}</td>
-    <td>{{ node.number_users }}</td>
-    <td>{{ node.stopped }}</td>
-    <td>{{ node.parent_id }}</td>
+    <td style="max-width: 500px">{{ node.url }}</td>
+    <td>{{ node.number_users }} [{{node.percent_users.toFixed(2)}}%]</td>
   </tr>
   <tr v-if="hasChildren" v-show="showChildren">
     <ActionItem
+      
       v-for="child in node.children"
       :spacing="spacing + 10"
       :key="child.id"
@@ -45,7 +43,7 @@ export default {
   computed: {
     nodeMargin() {
       return {
-        "padding-left": `${this.spacing}px`,
+        "padding-left": `${this.spacing}px`
       };
     },
     hasChildren() {
